@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PasswordManagerService.Data;
+using PasswordManagerService.Interface;
 using PasswordManagerService.Models;
 
 namespace PasswordManagerService.Class
 {
-    public class PasswordManagerServiceClass
+    public class PasswordManagerServiceClass: IPasswordManagerService
     {
         private readonly PasswordManagerContext _context;
 
