@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PasswordManagerService.Interface;
 using PasswordManagerService.Models;
 
@@ -15,9 +16,22 @@ namespace PasswordManagerService.Controllers
             _passwordManagerService = passwordManagerService;
         }
 
+        [Authorize] 
         [HttpPost("passwords/store")]
         public async Task<IActionResult> StorePasswordAsync(PasswordModel model)
         {
+            
+            var username = User.Identity?.Name;
+
+            
+            if (string.IsNullOrEmpty(username))
+            {
+                return BadRequest();
+            }
+
+            
+            model.Username = username;
+
             var result = await _passwordManagerService.StorePasswordAsync(model);
             if (!result.Success)
             {
@@ -26,9 +40,19 @@ namespace PasswordManagerService.Controllers
             return Ok(result.Message);
         }
 
+        [Authorize] 
         [HttpGet("passwords/retrieve")]
-        public async Task<IActionResult> RetrievePasswordsAsync(string username)
+        public async Task<IActionResult> RetrievePasswordsAsync()
         {
+            
+            var username = User.Identity?.Name;
+
+            
+            if (string.IsNullOrEmpty(username))
+            {
+                return BadRequest();
+            }
+
             var passwords = await _passwordManagerService.RetrievePasswordsAsync(username);
             if (passwords == null || !passwords.Any())
             {
@@ -37,6 +61,7 @@ namespace PasswordManagerService.Controllers
             return Ok(passwords);
         }
 
+        [Authorize] 
         [HttpPost("media/store")]
         public async Task<IActionResult> StoreMediaAsync(MediaModel model)
         {
@@ -48,6 +73,7 @@ namespace PasswordManagerService.Controllers
             return Ok(result.Message);
         }
 
+        [Authorize] 
         [HttpGet("media/retrieve")]
         public async Task<IActionResult> RetrieveMediaAsync(string username)
         {

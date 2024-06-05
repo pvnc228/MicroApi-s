@@ -7,9 +7,14 @@ using PasswordManagerService.Data;
 using PasswordManagerService.Interface;
 using PasswordManagerService.Models;
 using System.Text;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//builder.AddServiceDefaults();
+var options = new JsonSerializerOptions()
+{
+    AllowTrailingCommas = true
+};
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -46,9 +51,27 @@ builder.Services.AddAuthorization();
 
 // Register the PasswordManagerService
 builder.Services.AddScoped<IPasswordManagerService, PasswordManagerServiceClass>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtConfig = builder.Configuration.GetSection("Jwt");
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtConfig["Issuer"],
+            ValidAudience = jwtConfig["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["Key"]))
+        };
+    });
 
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+//app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

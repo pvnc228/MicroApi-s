@@ -3,8 +3,12 @@ using Microsoft.OpenApi.Models;
 using NotesService.Context;
 using NotesService.Interface;
 using NotesService.Class;
+using NotesService.Controllers;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
@@ -23,8 +27,13 @@ builder.Services.AddScoped<INotesService, NotesServiceClass>();
 // Register the AuthService and PasswordManagerService
 //builder.Services.AddScoped<IAuthService, AuthService>();
 //builder.Services.AddScoped<IPasswordManagerService, PasswordManagerService>();
-
+var options = new JsonSerializerOptions()
+{
+    AllowTrailingCommas = true
+};
 var app = builder.Build();
+
+//app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

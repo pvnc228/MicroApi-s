@@ -15,5 +15,6 @@ namespace NotesService.Context
 
             modelBuilder.Entity<StoredNote>().ToTable("StoredNotes");
         }
+        public DbSet<NotesService.Models.NoteModel> NoteModel { get; set; } = default!;
     }
 }

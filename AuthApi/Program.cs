@@ -7,9 +7,12 @@ using AuthApi.Models;
 using AuthApi.Interface;
 using AuthAPI;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+//builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
@@ -47,8 +50,13 @@ builder.Services.AddAuthorization();
 
 // Register the AuthService
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+var options = new JsonSerializerOptions()
+{
+    AllowTrailingCommas = true
+};
 var app = builder.Build();
+
+//app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

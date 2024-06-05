@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Vdcc35gyw18qF1THHSaHtQyFQtF3JAg8Wo2mmDjELZeRLNc/ay8h9EbhnJfe2H/HWyBCXV1qO7arHAvUb0B8fA==",
+  "dgSpecHash": "G2+Lf7btB8s=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mist8\\Documents\\микропенис\\AuthApi\\AuthApi.csproj",
+  "projectFilePath": "C:\\Users\\mist8\\Documents\\GitHub\\MicroApi-s\\AuthApi\\AuthApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mist8\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\mist8\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
